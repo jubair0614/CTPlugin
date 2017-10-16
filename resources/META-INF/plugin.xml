@@ -1,0 +1,86 @@
+<idea-plugin>
+	<id>com.your.company.unique.plugin.id.v1</id>
+	<name>Jubair plugin</name>
+	<version>1.1</version>
+	<vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+	<description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+	<change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+	</change-notes>
+
+	<!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+	<idea-version since-build="145.0"/>
+
+	<!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+		 on how to target different products -->
+	<!-- uncomment to enable plugin in all products
+	<depends>com.intellij.modules.lang</depends>
+	-->
+
+	<extensions defaultExtensionNs="com.intellij">
+		<!-- Add your extensions here -->
+	</extensions>
+
+	<actions>
+		<!-- Add your actions here -->
+		<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect Clone" description="clone detection using tool">
+			<!-- The <add-to-group> node specifies that the action should be added
+				 to an existing group. An action can be added to several groups.
+				 The mandatory "group-id" attribute specifies the ID of the group
+				 to which the action is added.
+				 The group must be implemented by an instance of the DefaultActionGroup class.
+				 The mandatory "anchor" attribute specifies the position of the
+				 action in the group relative to other actions. It can have the values
+				 "first", "last", "before" and "after".
+				 The "relative-to-action" attribute is mandatory if the anchor
+				 is set to "before" and "after", and specifies the action before or after which
+				 the current action is inserted. -->
+			<add-to-group group-id="BuildMenu" relative-to-action="Compile" anchor="after"/>
+			<!-- The <keyboard-shortcut> node specifies the keyboard shortcut
+				 for the action. An action can have several keyboard shortcuts.
+				 The mandatory "first-keystroke" attribute specifies the first
+				 keystroke of the action. The key strokes are specified according
+				 to the regular Swing rules.
+				 The optional "second-keystroke" attribute specifies the second
+				 keystroke of the action.
+				 The mandatory "keymap" attribute specifies the keymap for which
+				 the action is active. IDs of the standard keymaps are defined as
+				 constants in the com.intellij.openapi.keymap.KeymapManager class. -->
+			<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
+			<!-- The <mouse-shortcut> node specifies the mouse shortcut for the
+				 action. An action can have several mouse shortcuts.
+				 The mandatory "keystroke" attribute specifies the clicks and
+				 modifiers for the action. It is defined as a sequence of words
+				 separated by spaces:
+				 "button1", "button2", "button3" for the mouse buttons;
+				 "shift", "control", "meta", "alt", "altGraph" for the modifier keys;
+				 "doubleClick" if the action is activated by a double-click of the button.
+				 The mandatory "keymap" attribute specifies the keymap for which
+				 the action is active. IDs of the standard keymaps are defined as
+				 constants in the com.intellij.openapi.keymap.KeymapManager class. -->
+			<mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
+
+		</action>
+
+		<action id="EditorBasics.EditorHandlerIllustration" class="EditorHandlerIllustration" text="Editor Handler"
+				description="Illustrates how to plug an action in">
+			<add-to-group group-id="BuildMenu" anchor="first"/>
+		</action>
+
+
+		<group id="Plugin.SampleMenu" text="_Sample Menu" description="Sample menu">
+			<add-to-group group-id="MainMenu" anchor="last"  />
+			<action id="Plugin.Textboxes" class="TextBoxes" text="Text _Boxes" description="A test menu item" />
+		</group>
+
+
+	</actions>
+
+</idea-plugin>
