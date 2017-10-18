@@ -24,7 +24,7 @@ public class CloneDetection extends com.intellij.openapi.actionSystem.AnAction {
 		System.out.println(this.projectPath);
 
 		String sourcercc = "/home/jubair/IdeaProjects/Plugin/resources/scripts/runSourcerCCWithProject.sh " + this.projectPath;
-		String nicad4 = "/home/jubair/IdeaProjects/Plugin/resources/scripts/runNicad4.sh " + this.projectPath;
+		String nicad4 = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runNicad4.sh " + this.projectPath;
 		detectClone(nicad4);
 
 	}

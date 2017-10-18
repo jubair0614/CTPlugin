@@ -4,9 +4,8 @@ echo $line
 echo "Input File Building..........."
 
 echo $1
-    cd /home/jubair/SPL3/tools/Nicad-4.0
+    cd /home/jubair/SPL3/tools/NiCad-4.0
 
-    make
     nicad4 functions java $1
 
     echo "File copying in the output directory"
@@ -18,4 +17,4 @@ echo $1
 	rm -f /home/jubair/SPL3/test_projects/JHotDraw54b1_functions.xml
 	rm -f /home/jubair/SPL3/test_projects/JHotDraw54b1_functions-clones-*
 
-    echo "Successfully Done"
+echo "Successfully Done"
