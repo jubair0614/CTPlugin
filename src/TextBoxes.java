@@ -13,7 +13,7 @@ public class TextBoxes extends AnAction {
 	// You can omit this constructor when registering the action in the plugin.xml file.
 	public TextBoxes() {
 		// Set the menu item name.
-		super("Text _Boxes");
+		super("Text_Boxes");
 		// Set the menu item name, description and icon.
 		// super("Text _Boxes","Item description",IconLoader.getIcon("/Mypackage/icon.png"));
 	}

@@ -1,0 +1,15 @@
+Sat Oct 14 21:14:04 BDT 2017
+/usr/local/lib/nicad4/txl/java-extract-functions.x ALL.java >> /home//jubair/SPL3/tools/NiCad-4.0/examples/dnsjava-master_functions.xml
+
+Sat Oct 14 21:14:09 BDT 2017
+
+Sat Oct 14 21:14:09 BDT 2017
+/usr/local/lib/nicad4/tools/clonepairs.x /home//jubair/SPL3/tools/NiCad-4.0/examples/dnsjava-master_functions.xml 0.30 10 2500 > /home//jubair/SPL3/tools/NiCad-4.0/examples/dnsjava-master_functions-clones/dnsjava-master_functions-clones-0.30.xml
+/usr/local/lib/nicad4/scripts/FindClonePairs: line 49: 20404 Segmentation fault      ${lib}/tools/clonepairs.x ${basename}.xml $* > ${resultsdir}/${systemname}-clones-${threshold}.xml
+
+real	0m0.001s
+user	0m0.000s
+sys	0m0.000s
+
+Sat Oct 14 21:14:09 BDT 2017
+
