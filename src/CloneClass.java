@@ -8,39 +8,29 @@ import java.util.List;
 public class CloneClass {
     public int classId;
     public int numOfClones;
+    public int numOfLines;
     public int similarity;
-    public ArrayList<File> cloneFiles;
+    public ArrayList<CloneFragment> cloneFiles;
 
     public CloneClass(){
         this.classId = 0;
         this.numOfClones = 0;
         this.similarity = 0;
+        this.numOfLines = 0;
         this.cloneFiles = new ArrayList<>();
     }
 
-    public ArrayList<File> getCloneFiles(){
+    public ArrayList<CloneFragment> getCloneFiles(){
         return this.cloneFiles;
     }
 
     public ArrayList<String> getCloneFilePathes(){
         ArrayList<String> paths = new ArrayList<>();
-        for (File file:
+        for (CloneFragment fragment:
              this.cloneFiles) {
-            String path = file.getPath();
+            String path = fragment.path;
             paths.add(path);
         }
         return paths;
     }
-
-    public ArrayList<String> getCloneFileNames(){
-        ArrayList<String> names = new ArrayList<>();
-        for (File file:
-                this.cloneFiles) {
-            String name = file.getName();
-            names.add(name);
-        }
-        return names;
-    }
-
-
 }

@@ -30,7 +30,7 @@
 
 	<actions>
 		<!-- Add your actions here -->
-		<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect Clone" description="clone detection using tool">
+		<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect CloneFragment" description="clone detection using tool">
 			<!-- The <add-to-group> node specifies that the action should be added
 				 to an existing group. An action can be added to several groups.
 				 The mandatory "group-id" attribute specifies the ID of the group
@@ -78,7 +78,7 @@
 		<group id="Plugin.CloneTrack" text="CloneTrack" description="Custom Menu for SPL3">
 			<add-to-group group-id="MainMenu" anchor="last"  />
 
-			<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect Clone" description="clone detection using tool">
+			<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect CloneFragment" description="clone detection using tool">
 				<!-- The <keyboard-shortcut> node specifies the keyboard shortcut
 					 for the action. An action can have several keyboard shortcuts.
 					 The mandatory "first-keystroke" attribute specifies the first
@@ -105,7 +105,7 @@
 
 			</action>
 
-			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="Clone tracking" />
+			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="CloneFragment tracking" />
 
 			<action id="Plugin.Textboxes" class="TextBoxes" text="Text _Boxes" description="A test menu item" />
 		</group>
