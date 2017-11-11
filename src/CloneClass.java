@@ -24,7 +24,7 @@ public class CloneClass {
         return this.cloneFiles;
     }
 
-    public ArrayList<String> getCloneFilePathes(){
+    public ArrayList<String> getCloneFilePaths(){
         ArrayList<String> paths = new ArrayList<>();
         for (CloneFragment fragment:
              this.cloneFiles) {
