@@ -1,12 +1,12 @@
 <idea-plugin>
-	<id>com.your.company.unique.plugin.id.v1</id>
-	<name>Jubair plugin</name>
+	<id>bd.ac.du.iit.jubu.v1</id>
+	<name>Jubair Clone Tracker Plugin</name>
 	<version>1.1</version>
-	<vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+	<vendor email="jubair0614@gmail.com" url="http://www.iit.du.ac.bd">IIT</vendor>
 
 	<description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      This is a tool to track inconsistency within clone group<br>
+      <em>Clone Tracker</em>
     ]]></description>
 
 	<change-notes><![CDATA[
@@ -111,6 +111,10 @@
 		</group>
 
 
+		<action id="generateComparisonChain" class="org.jubair.tracker.GenerateAction" text="ComparisonChain"
+				description="hudai">
+			<add-to-group group-id="GenerateGroup" anchor="last"/>
+		</action>
 	</actions>
 
 </idea-plugin>
