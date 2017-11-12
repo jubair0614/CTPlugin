@@ -5,6 +5,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.Messages;
+import detection.CloneDetection;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -50,8 +51,10 @@ public class CurrentProject implements ProjectComponent {
 		Messages.showMessageDialog(
 				"Project: " + projectName +
 						" is opened!", "Information", Messages.getInformationIcon());
-
 		System.out.println(projectInstance.getProjectPath() + "\n" + projectInstance.getProjectName());
+
+		CloneDetection cloneDetection = new CloneDetection(basePath);
+		cloneDetection.detectClone();
 	}
 
 	@Override
