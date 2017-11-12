@@ -9,4 +9,9 @@ public class CloneTracking extends AnAction {
 	public void actionPerformed(AnActionEvent anActionEvent) {
 		System.out.println("This is clone tracking");
 	}
+
+	@Override
+	public void update(AnActionEvent e) {
+		super.update(e);
+	}
 }
