@@ -33,7 +33,7 @@
 
 	<actions>
 		<!-- Add your actions here -->
-		<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect CloneFragment" description="clone detection using tool">
+		<action id="Plugin.CloneDetectionAction" class="CloneDetectionAction"  text="Detect Clone" description="clone detection in the whole repository">
 
 			<add-to-group group-id="BuildMenu" relative-to-action="Compile" anchor="after"/>
 
@@ -65,7 +65,7 @@
 		<group id="Plugin.CloneTrack" text="CloneTrack" description="Custom Menu for SPL3">
 			<add-to-group group-id="MainMenu" anchor="last"  />
 
-			<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect CloneFragment" description="clone detection using tool">
+			<action id="Plugin.CloneDetectionAction" class="CloneDetectionAction" text="Detect CloneFragment" description="clone detection using tool">
 
 				<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
 
