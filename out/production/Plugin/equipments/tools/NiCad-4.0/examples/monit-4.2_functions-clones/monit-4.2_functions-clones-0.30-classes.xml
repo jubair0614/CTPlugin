@@ -1,7 +1,0 @@
-<clones>
-<systeminfo processor="nicad3" system="monit-4.2" granularity="functions" threshold="30%" minlines="10" maxlines="2500"/>
-<cloneinfo npcs="0" npairs="0"/>
-<runinfo ncompares="0" cputime="20453"/>
-<classinfo nclasses="0"/>
-
-</clones>
