@@ -28,6 +28,7 @@
 		<!-- Add your extensions here -->
 		<!-- Declare the project level service -->
 		<applicationService serviceInterface="services.ProjectCounter" serviceImplementation="services.ProjectCounter"></applicationService>
+		<applicationService serviceInterface="services.ProjectInstance" serviceImplementation="services.ProjectInstance"></applicationService>
 	</extensions>
 
 	<actions>
@@ -86,15 +87,8 @@
 		<component>
 			<implementation-class>services.MaxProject</implementation-class>
 		</component>
+		<component>
+			<implementation-class>services.CurrentProject</implementation-class>
+		</component>
 	</project-components>
-	<application-components>
-		<component>
-			<implementation-class>services.DemoApplicationComponent</implementation-class>
-		</component>
-	</application-components>
-	<module-components>
-		<component>
-			<implementation-class>services.DemoModule</implementation-class>
-		</component>
-	</module-components>
 </idea-plugin>
