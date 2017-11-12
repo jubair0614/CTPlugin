@@ -1,5 +1,5 @@
 <idea-plugin>
-	<id>bd.ac.du.iit.jubu.v1</id>
+	<id>jubair.cloneTracker</id>
 	<name>Jubair Clone Tracker Plugin</name>
 	<version>1.1</version>
 	<vendor email="jubair0614@gmail.com" url="http://www.iit.du.ac.bd">IIT</vendor>
@@ -26,52 +26,38 @@
 
 	<extensions defaultExtensionNs="com.intellij">
 		<!-- Add your extensions here -->
+		<!-- Declare the project level service -->
+		<applicationService serviceInterface="services.ProjectCounter" serviceImplementation="services.ProjectCounter"></applicationService>
 	</extensions>
 
 	<actions>
 		<!-- Add your actions here -->
 		<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect CloneFragment" description="clone detection using tool">
-			<!-- The <add-to-group> node specifies that the action should be added
-				 to an existing group. An action can be added to several groups.
-				 The mandatory "group-id" attribute specifies the ID of the group
-				 to which the action is added.
-				 The group must be implemented by an instance of the DefaultActionGroup class.
-				 The mandatory "anchor" attribute specifies the position of the
-				 action in the group relative to other actions. It can have the values
-				 "first", "last", "before" and "after".
-				 The "relative-to-action" attribute is mandatory if the anchor
-				 is set to "before" and "after", and specifies the action before or after which
-				 the current action is inserted. -->
+
 			<add-to-group group-id="BuildMenu" relative-to-action="Compile" anchor="after"/>
-			<!-- The <keyboard-shortcut> node specifies the keyboard shortcut
-				 for the action. An action can have several keyboard shortcuts.
-				 The mandatory "first-keystroke" attribute specifies the first
-				 keystroke of the action. The key strokes are specified according
-				 to the regular Swing rules.
-				 The optional "second-keystroke" attribute specifies the second
-				 keystroke of the action.
-				 The mandatory "keymap" attribute specifies the keymap for which
-				 the action is active. IDs of the standard keymaps are defined as
-				 constants in the com.intellij.openapi.keymap.KeymapManager class. -->
+
 			<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
-			<!-- The <mouse-shortcut> node specifies the mouse shortcut for the
-				 action. An action can have several mouse shortcuts.
-				 The mandatory "keystroke" attribute specifies the clicks and
-				 modifiers for the action. It is defined as a sequence of words
-				 separated by spaces:
-				 "button1", "button2", "button3" for the mouse buttons;
-				 "shift", "control", "meta", "alt", "altGraph" for the modifier keys;
-				 "doubleClick" if the action is activated by a double-click of the button.
-				 The mandatory "keymap" attribute specifies the keymap for which
-				 the action is active. IDs of the standard keymaps are defined as
-				 constants in the com.intellij.openapi.keymap.KeymapManager class. -->
+
 			<mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
 
 		</action>
-
-		<action id="EditorBasics.EditorHandlerIllustration" class="EditorHandlerIllustration" text="Editor Handler"
+		<action id="EditorBasics.EditorIllustration"
+				class="tryPackage.EditorIllustration"
+				text="Editor Basics"
 				description="Illustrates how to plug an action in">
-			<add-to-group group-id="BuildMenu" anchor="first"/>
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+		</action>
+		<action id="EditorBasics.EditorHandlerIllustration"
+				class="tryPackage.EditorHandlerIllustration"
+				text="Editor Handler"
+				description="Illustrates how to plug an action in">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+		</action>
+		<action id="EditorBasics.LogicalPositionIllustration"
+				class="tryPackage.EditorAreaIllustration"
+				text="Caret Position"
+				description="Illustrates how editor area is organized">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 		</action>
 
 
@@ -79,42 +65,36 @@
 			<add-to-group group-id="MainMenu" anchor="last"  />
 
 			<action id="Plugin.CloneDetection" class="CloneDetection"  text="Detect CloneFragment" description="clone detection using tool">
-				<!-- The <keyboard-shortcut> node specifies the keyboard shortcut
-					 for the action. An action can have several keyboard shortcuts.
-					 The mandatory "first-keystroke" attribute specifies the first
-					 keystroke of the action. The key strokes are specified according
-					 to the regular Swing rules.
-					 The optional "second-keystroke" attribute specifies the second
-					 keystroke of the action.
-					 The mandatory "keymap" attribute specifies the keymap for which
-					 the action is active. IDs of the standard keymaps are defined as
-					 constants in the com.intellij.openapi.keymap.KeymapManager class. -->
+
 				<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
-				<!-- The <mouse-shortcut> node specifies the mouse shortcut for the
-					 action. An action can have several mouse shortcuts.
-					 The mandatory "keystroke" attribute specifies the clicks and
-					 modifiers for the action. It is defined as a sequence of words
-					 separated by spaces:
-					 "button1", "button2", "button3" for the mouse buttons;
-					 "shift", "control", "meta", "alt", "altGraph" for the modifier keys;
-					 "doubleClick" if the action is activated by a double-click of the button.
-					 The mandatory "keymap" attribute specifies the keymap for which
-					 the action is active. IDs of the standard keymaps are defined as
-					 constants in the com.intellij.openapi.keymap.KeymapManager class. -->
+
 				<mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
 
 			</action>
 
 			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="CloneFragment tracking" />
 
+			<action id="MethodFragment" class="MethodFragment" text="MethodFragment" description="Method Fragment Extraction" />
+
 			<action id="Plugin.Textboxes" class="TextBoxes" text="Text _Boxes" description="A test menu item" />
 		</group>
 
-
-		<action id="generateComparisonChain" class="org.jubair.tracker.GenerateAction" text="ComparisonChain"
-				description="hudai">
-			<add-to-group group-id="GenerateGroup" anchor="last"/>
-		</action>
 	</actions>
 
+
+	<project-components>
+		<component>
+			<implementation-class>services.MaxProject</implementation-class>
+		</component>
+	</project-components>
+	<application-components>
+		<component>
+			<implementation-class>services.DemoApplicationComponent</implementation-class>
+		</component>
+	</application-components>
+	<module-components>
+		<component>
+			<implementation-class>services.DemoModule</implementation-class>
+		</component>
+	</module-components>
 </idea-plugin>
