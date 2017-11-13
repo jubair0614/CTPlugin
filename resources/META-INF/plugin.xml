@@ -76,10 +76,12 @@
 			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="CloneFragment tracking" />
 
 			<action id="MethodFragment" class="MethodFragment" text="MethodFragment" description="Method Fragment Extraction" />
-
-			<action id="Plugin.Textboxes" class="TextBoxes" text="Text _Boxes" description="A test menu item" />
 		</group>
 
+		<action id="InconsistentHint" class="actions.InconsistentHinter" text="Find Inconsistency"
+				description="Select a cloned method and find enconsistency">
+			<add-to-group group-id="EditorActions" anchor="first"/>
+		</action>
 	</actions>
 
 
