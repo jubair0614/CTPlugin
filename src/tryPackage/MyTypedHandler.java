@@ -13,12 +13,13 @@ public class MyTypedHandler implements TypedActionHandler {
     public void execute(@NotNull Editor editor, char c, @NotNull DataContext dataContext) {
         final Document document = editor.getDocument();
         Project project = editor.getProject();
-        Runnable runnable = new Runnable() {
+        /*Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 document.insertString(0, "Typed\n");
             }
         };
-        WriteCommandAction.runWriteCommandAction(project, runnable);
+        WriteCommandAction.runWriteCommandAction(project, runnable);*/
+        project.getUserData()
     }
 }

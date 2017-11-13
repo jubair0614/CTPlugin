@@ -23,11 +23,8 @@ public class MethodFragment extends AnAction {
     private void printMethodBody(PsiMethod[] psiClassMethods) {
         for (PsiMethod psiMethod:
                 psiClassMethods) {
-            PsiStatement[] statements = psiMethod.getBody().getStatements();
-            for (PsiStatement statement:
-                 statements) {
-                System.out.println(statement.getText());
-            }
+            PsiCodeBlock body = psiMethod.getBody();
+            System.out.println(body.getText());
         }
     }
 
