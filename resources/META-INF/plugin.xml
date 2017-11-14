@@ -79,9 +79,16 @@
 		</group>
 
 		<action id="InconsistentHint" class="actions.InconsistentHinter" text="Find Inconsistency"
-				description="Select a cloned method and find enconsistency">
+				description="Select a cloned method and find inconsistency">
 			<add-to-group group-id="EditorActions" anchor="first"/>
 		</action>
+
+		<action id="SelectedFragment" class="actions.SelectedFragment" text="Select Fragment"
+				description="a method fragment is selected for searching its clone instances">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+			<keyboard-shortcut keymap="$default" first-keystroke="ctrl S F"/>
+		</action>
+
 	</actions>
 
 
