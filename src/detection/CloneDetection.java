@@ -15,16 +15,27 @@ public class CloneDetection{
 		this.projectPath = projectPath;
 	}
 
-	private String toolChooser(){
-		//String sourcercc = "/home/jubair/IdeaProjects/Plugin/resources/scripts/runSourcerCCWithProject.sh " + this.projectPath;
-
-		String nicad4 = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runNicad4.sh " + this.projectPath;
-
-		return nicad4;
+	private String toolChooser(int num){
+		String tool;
+		switch (num){
+			case 1:
+				System.out.println("nicad-4.0");
+				tool = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runNicad4.sh " + this.projectPath;
+				break;
+			case 2:
+				System.out.println("SourcererCC");
+				tool = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runSourcerCCWithProject.sh " + this.projectPath;
+				break;
+			default:
+				System.out.println("nicad-4.0");
+				tool = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runNicad4.sh " + this.projectPath;
+		}
+		return tool;
 	}
 
 	public void detectClone() {
-		String toolScript = toolChooser();
+		String toolScript = toolChooser(1);
+		System.out.println("Project: " + getProjectPath());
 		Process proc = null;
 		try {
 			proc = Runtime.getRuntime().exec(toolScript);
