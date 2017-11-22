@@ -33,8 +33,11 @@ public class SelectedFragment extends AnAction {
 
         PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
         int offset = editor.getCaretModel().getOffset();
-        PsiElement elementAt = psiFile.findElementAt(offset);
+        PsiElement elementAt = psiFile.findElementAt(offset).getParent();
         System.out.println(elementAt.getText());
+        String s = elementAt.getNode().getElementType().toString();
+        System.out.println(s);
+
         boolean methodFragment = checkForValidMethodFragment(selectedText);
         System.out.println(methodFragment);
     }
