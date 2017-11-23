@@ -26,13 +26,6 @@ public class CurrentProject implements ProjectComponent {
 	public void initComponent() {
 		// TODO: insert component initialization logic here
 
-		ClonePairs clonePairs = new ClonePairs();
-		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30.xml";
-		clonePairs.readClonePairs(pairFilePath);
-
-		CloneClasses cloneClasses = new CloneClasses();
-		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30-classes.xml";
-		cloneClasses.readCloneClasses(classFilePath);
 	}
 
 	@Override
@@ -72,6 +65,18 @@ public class CurrentProject implements ProjectComponent {
 
 		CloneDetection cloneDetection = new CloneDetection(basePath);
 		cloneDetection.detectClone();
+
+		initialize();
+	}
+
+	private void initialize() {
+		ClonePairs clonePairs = new ClonePairs();
+		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30.xml";
+		clonePairs.readClonePairs(pairFilePath);
+
+		CloneClasses cloneClasses = new CloneClasses();
+		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30-classes.xml";
+		cloneClasses.readCloneClasses(classFilePath);
 	}
 
 	@Override
