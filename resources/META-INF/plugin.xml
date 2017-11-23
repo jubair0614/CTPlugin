@@ -33,15 +33,27 @@
 
 	<actions>
 		<!-- Add your actions here -->
-		<action id="Plugin.actions.CloneDetectionAction" class="actions.CloneDetectionAction" text="Detect Clone" description="clone detection in the whole repository">
 
+		<!-- This action detect clones in the whole repository -->
+		<action id="Plugin.actions.CloneDetectionAction"
+				class="actions.CloneDetectionAction"
+				text="Detect Clone"
+				description="clone detection in the whole repository">
 			<add-to-group group-id="BuildMenu" relative-to-action="Compile" anchor="after"/>
-
 			<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
-
 			<mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
-
 		</action>
+
+		<!-- This action extract current fragment from the caret position -->
+		<action id="CaretPosition.FragmentExtractor"
+				class="actions.CaretPositionFragment"
+				text="Show Clones"
+				description="Get all clones of selected Fragment">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+		</action>
+
+
+
 		<action id="EditorBasics.EditorIllustration"
 				class="tryPackage.EditorIllustration"
 				text="Editor Basics"
@@ -54,18 +66,12 @@
 				description="Illustrates how to plug an action in">
 			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 		</action>
-		<action id="EditorBasics.LogicalPositionIllustration"
-				class="tryPackage.EditorAreaIllustration"
-				text="Caret Position"
-				description="Illustrates how editor area is organized">
-			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
-		</action>
 
 
 		<group id="Plugin.CloneTrack" text="CloneTrack" description="Custom Menu for SPL3">
 			<add-to-group group-id="MainMenu" anchor="last"  />
 
-			<action id="Plugin.actions.CloneDetectionAction" class="actions.CloneDetectionAction" text="Detect CloneFragment" description="clone detection using tool">
+			<action id="Plugin.actions.CloneDetectionAction" class="actions.CloneDetectionAction" text="Detect utilites.CloneFragment" description="clone detection using tool">
 
 				<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
 
@@ -73,7 +79,7 @@
 
 			</action>
 
-			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="CloneFragment tracking" />
+			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="utilites.CloneFragment tracking" />
 
 			<action id="MethodFragment" class="MethodFragment" text="MethodFragment" description="Method Fragment Extraction" />
 		</group>
