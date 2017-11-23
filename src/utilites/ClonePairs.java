@@ -1,3 +1,5 @@
+package utilites;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -56,7 +58,7 @@ public class ClonePairs {
 					for (int i=0; i<sourceNode.getLength(); i++){
 
 						CloneFragment cloneFragment = new CloneFragment();
-						
+
 						Node innerNode = sourceNode.item(i);
 						Element innerElement = (Element) innerNode;
 
