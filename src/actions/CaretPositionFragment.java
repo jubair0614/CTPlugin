@@ -16,6 +16,9 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import tracker.FileGenerator;
+import utilites.CloneClass;
+import utilites.CloneClasses;
+import utilites.CloneFragment;
 
 public class CaretPositionFragment extends AnAction {
 
@@ -48,6 +51,7 @@ public class CaretPositionFragment extends AnAction {
 
         fragmentPath = psiFile.getContainingDirectory().toString() + "/" + psiFile.getName();
         System.out.println(fragmentPath);
+        fragmentPath = fragmentPath.substring(13, fragmentPath.length());
 
         TextRange textRange = elementAt.getTextRange();
         VisualPosition startLinePosition = editor.offsetToVisualPosition(textRange.getStartOffset());
@@ -55,10 +59,24 @@ public class CaretPositionFragment extends AnAction {
 
         this.startLine = startLinePosition.line + 1;
         this.endLine = endLinePosition.line + 1;
-
         System.out.println("startLine: " + this.startLine + " " + "endLine: " + this.endLine);
+
+        getClonesOfThisFragment(fragmentPath, startLine, endLine);
+
         FileGenerator fileGenerator = new FileGenerator();
         fileGenerator.setChanged(fragment);
+    }
+
+    public void getClonesOfThisFragment(String fragmentPath, int startLine, int endLine){
+        CloneClasses cloneClasses = new CloneClasses();
+        CloneClass cloneClass = cloneClasses.getCloneClass(fragmentPath);
+
+        if(cloneClass != null){
+            for (CloneFragment cloneFragment:
+                    cloneClass.cloneFiles) {
+                System.out.println("Path: " + cloneFragment.path + "startLine: " + startLine + "endLine: " + cloneFragment.endLine);
+            }
+        }
     }
 
     @Override
