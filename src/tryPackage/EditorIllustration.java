@@ -11,7 +11,6 @@ public class EditorIllustration extends AnAction {
     static {
         final EditorActionManager actionManager = EditorActionManager.getInstance();
         final TypedAction typedAction = actionManager.getTypedAction();
-        typedAction.setupHandler(new MyTypedHandler());
     }
 
     @Override
