@@ -18,7 +18,7 @@ public class ClonePairs {
 	public ClonePairs(){
 		clonePairs = new ArrayList<>();
 	}
-	public void readCloneClasses(String xmlFile){
+	public void readClonePairs(String xmlFile){
 		try {
 			File file = new File(xmlFile);
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -27,50 +27,51 @@ public class ClonePairs {
 
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+//			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-			NodeList nList = doc.getElementsByTagName("class");
+			NodeList nList = doc.getElementsByTagName("clone");
 
-			System.out.println("----------------------------");
+//			System.out.println("----------------------------");
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
-				CloneClass singleClass = new CloneClass();
+				ClonePair clonePair = new ClonePair();
 				Node nNode = nList.item(temp);
 
-				System.out.println("\nCurrent Element :" + nNode.getNodeName());
+//				System.out.println("\nCurrent Element :" + nNode.getNodeName());
 
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 					Element eElement = (Element) nNode;
 
-					System.out.println("Class id: " + eElement.getAttribute("classid"));
-					System.out.println("Number of Clones: " + eElement.getAttribute("nclones"));
-					System.out.println("Number of Lines: " + eElement.getAttribute("nlines"));
+					/*System.out.println("Number of Lines: " + eElement.getAttribute("nlines"));
 					System.out.println("Similarity: " + eElement.getAttribute("similarity"));
-
-					singleClass.classId = Integer.parseInt(eElement.getAttribute("classid"));
-					singleClass.numOfClones = Integer.parseInt(eElement.getAttribute("nclones"));
-					singleClass.numOfLines = Integer.parseInt(eElement.getAttribute("nlines"));
-					singleClass.similarity = Integer.parseInt(eElement.getAttribute("similarity"));
+*/
+					clonePair.numOfLines = Integer.parseInt(eElement.getAttribute("nlines"));
+					clonePair.similarity = Integer.parseInt(eElement.getAttribute("similarity"));
 
 					NodeList sourceNode = eElement.getElementsByTagName("source");
-					if(sourceNode != null && sourceNode.getLength() > 0){
 
-						Node innnerNode = sourceNode.item(0);
+					ArrayList<CloneFragment> clones = new ArrayList<>();
 
-						Element innerElement = (Element) innnerNode;
+					for (int i=0; i<sourceNode.getLength(); i++){
 
-						System.out.println("Path: " + innerElement.getAttribute("file"));
-						System.out.println("Start line: " + innerElement.getAttribute("startline"));
-						System.out.println("End line: " + innerElement.getAttribute("endline"));
-						System.out.println("PCID: " + innerElement.getAttribute("pcid"));
+						CloneFragment cloneFragment = new CloneFragment();
+						
+						Node innerNode = sourceNode.item(i);
+						Element innerElement = (Element) innerNode;
 
-						singleClass.similarity = Integer.parseInt(eElement.getAttribute("similarity"));
-						singleClass.similarity = Integer.parseInt(eElement.getAttribute("similarity"));
-						singleClass.similarity = Integer.parseInt(eElement.getAttribute("similarity"));
-						singleClass.similarity = Integer.parseInt(eElement.getAttribute("similarity"));
+
+						cloneFragment.path = innerElement.getAttribute("file");
+						cloneFragment.startLine = Integer.parseInt(innerElement.getAttribute("startline"));
+						cloneFragment.endLine = Integer.parseInt(innerElement.getAttribute("endline"));
+						cloneFragment.pcid = Integer.parseInt(innerElement.getAttribute("pcid"));
+
+						clones.add(cloneFragment);
 					}
+
+					clonePair.pairs.addAll(clones);
 				}
+				this.clonePairs.add(clonePair);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,8 +86,48 @@ public class ClonePairs {
 		return this.clonePairs;
 	}
 
+	public void printPairs(){
+		for (ClonePair currentPair
+				: this.clonePairs) {
+			System.out.println("Number of Lines: " + currentPair.numOfLines);
+			System.out.println("Similarity: " + currentPair.similarity);
+
+			for (CloneFragment singleFragment:
+					currentPair.pairs) {
+				System.out.println("Path: " + singleFragment.path);
+				System.out.println("Start line: " + singleFragment.startLine);
+				System.out.println("End line: " + singleFragment.endLine);
+				System.out.println("PCID: " + singleFragment.pcid);
+			}
+		}
+	}
+
+	public ClonePair getClonePair(String oneFragmentPath){
+		ClonePair requiredPair = null;
+
+		for (ClonePair singlePair:
+				this.clonePairs) {
+			for (CloneFragment singleFragment:
+					singlePair.pairs) {
+				if (singleFragment.path.equals(oneFragmentPath))
+					requiredPair = singlePair;
+			}
+		}
+
+		return requiredPair;
+	}
+
+	public int getNumOfPairs(){
+		return this.clonePairs.size();
+	}
+
 	public static void main(String[] args) {
 		ClonePairs clonePairs = new ClonePairs();
-		clonePairs.readCloneClasses("/home/jubair/SPL3/test_projects/cloneResult/JHotDraw54b1_functions-clones/JHotDraw54b1_functions-clones-0.30-classes.xml");
+		clonePairs.readClonePairs("/home/jubair/SPL3/test_projects/cloneResult/JHotDraw54b1_functions-clones/JHotDraw54b1_functions-clones-0.30.xml");
+		System.out.println(clonePairs.getNumOfPairs());
+
+		clonePairs.printPairs();
+		ClonePair clonePair = clonePairs.getClonePair("/home/jubair/SPL3/test_projects/JHotDraw54b1/src/CH/ifa/draw/application/DrawApplication.java");
+		System.out.println(clonePair.similarity);
 	}
 }
