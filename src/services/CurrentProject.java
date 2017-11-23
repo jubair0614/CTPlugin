@@ -7,12 +7,16 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.Messages;
 import detection.CloneDetection;
 import org.jetbrains.annotations.NotNull;
+import utilites.CloneClasses;
+import utilites.ClonePairs;
 
 /**
  * Created by jubair on 11/12/17.
  */
 public class CurrentProject implements ProjectComponent {
 	ProjectInstance projectInstance;
+	String projectName;
+	String projectPath;
 
 	public CurrentProject(Project project) {
 		this.projectInstance = null;
@@ -21,6 +25,14 @@ public class CurrentProject implements ProjectComponent {
 	@Override
 	public void initComponent() {
 		// TODO: insert component initialization logic here
+
+		ClonePairs clonePairs = new ClonePairs();
+		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30.xml";
+		clonePairs.readClonePairs(pairFilePath);
+
+		CloneClasses cloneClasses = new CloneClasses();
+		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30-classes.xml";
+		cloneClasses.readCloneClasses(classFilePath);
 	}
 
 	@Override
@@ -48,9 +60,14 @@ public class CurrentProject implements ProjectComponent {
 
 		String projectName = project.getName();
 		projectInstance.setProjectName(projectName);
+
+		this.projectPath = basePath + "/" + projectName;
+		this.projectName = projectName;
+
 		Messages.showMessageDialog(
 				"Project: " + projectName +
 						" is opened!", "Information", Messages.getInformationIcon());
+
 		System.out.println(projectInstance.getProjectPath() + "\n" + projectInstance.getProjectName());
 
 		CloneDetection cloneDetection = new CloneDetection(basePath);
