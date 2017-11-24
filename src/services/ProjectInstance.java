@@ -5,11 +5,12 @@ package services;
  * Time 11:42 PM
  */
 public class ProjectInstance {
-	public String projectPath;
-	public String projectName;
+	private String projectPath;
+	private String projectName;
 
 	public ProjectInstance() {
 		this.projectPath = null;
+		this.projectName = null;
 	}
 
 	public void setProjectPath(String path){

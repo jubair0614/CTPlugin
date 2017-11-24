@@ -1,5 +1,9 @@
 package services;
 
+import com.intellij.execution.ui.ConsoleView;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
@@ -15,8 +19,6 @@ import utilites.ClonePairs;
  */
 public class CurrentProject implements ProjectComponent {
 	ProjectInstance projectInstance;
-	String projectName;
-	String projectPath;
 
 	public CurrentProject(Project project) {
 		this.projectInstance = null;
@@ -25,12 +27,13 @@ public class CurrentProject implements ProjectComponent {
 	@Override
 	public void initComponent() {
 		// TODO: insert component initialization logic here
-
+		//Notifications.Bus.notify(new Notification(ConsoleView.CONSOLE_CONTENT_ID, "jubair-", "init", NotificationType.INFORMATION));
 	}
 
 	@Override
 	public void disposeComponent() {
 		// TODO: insert component disposal logic here
+		//Notifications.Bus.notify(new Notification(ConsoleView.CONSOLE_CONTENT_ID, "jubair-", "dispose", NotificationType.INFORMATION));
 	}
 
 	@Override
@@ -54,8 +57,8 @@ public class CurrentProject implements ProjectComponent {
 		String projectName = project.getName();
 		projectInstance.setProjectName(projectName);
 
-		this.projectPath = basePath + "/" + projectName;
-		this.projectName = projectName;
+		this.projectInstance.setProjectPath(basePath + "/" + projectName);
+		this.projectInstance.setProjectName(projectName);
 
 		Messages.showMessageDialog(
 				"Project: " + projectName +
@@ -66,24 +69,26 @@ public class CurrentProject implements ProjectComponent {
 		CloneDetection cloneDetection = new CloneDetection(basePath);
 		cloneDetection.detectClone();
 
-		initialize();
+		initializeClones();
 	}
 
-	private void initialize() {
+	private void initializeClones() {
 		ClonePairs clonePairs = new ClonePairs();
-		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30.xml";
+		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+this.projectInstance.getProjectName()+"_functions-clones/"+this.projectInstance.getProjectName()+"_functions-clones-0.30.xml";
 		clonePairs.readClonePairs(pairFilePath);
+		clonePairs.printPairs();
 
 		CloneClasses cloneClasses = new CloneClasses();
-		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30-classes.xml";
+		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+this.projectInstance.getProjectName()+"_functions-clones/"+this.projectInstance.getProjectName()+"_functions-clones-0.30-classes.xml";
 		cloneClasses.readCloneClasses(classFilePath);
+		cloneClasses.printClasses();
 	}
 
 	@Override
 	public void projectClosed() {
 		// called when project is being closed
-		Messages.showMessageDialog(
+		/*Messages.showMessageDialog(
 				"Project: " + projectInstance.getProjectName() +
-						" closed!", "Information", Messages.getInformationIcon());
+						" closed!", "Information", Messages.getInformationIcon());*/
 	}
 }
