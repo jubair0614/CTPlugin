@@ -1,8 +1,8 @@
 <idea-plugin>
-	<id>jubair.cloneTracker</id>
-	<name>Jubair Clone Tracker Plugin</name>
+	<id>jubair.InconsistentCloneTracker</id>
+	<name>Inconsistent Clone Tracker</name>
 	<version>1.1</version>
-	<vendor email="jubair0614@gmail.com" url="http://www.iit.du.ac.bd">IIT</vendor>
+	<vendor email="jubair0614@gmail.com" url="https://github.com/jubair0614">Jubair</vendor>
 
 	<description><![CDATA[
       This is a tool to track inconsistency within clone group<br>
@@ -27,7 +27,6 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<!-- Add your extensions here -->
 		<!-- Declare the project level service -->
-		<applicationService serviceInterface="services.ProjectCounter" serviceImplementation="services.ProjectCounter"></applicationService>
 		<applicationService serviceInterface="services.ProjectInstance" serviceImplementation="services.ProjectInstance"></applicationService>
 	</extensions>
 
@@ -99,9 +98,6 @@
 
 
 	<project-components>
-		<component>
-			<implementation-class>services.MaxProject</implementation-class>
-		</component>
 		<component>
 			<implementation-class>services.CurrentProject</implementation-class>
 		</component>
