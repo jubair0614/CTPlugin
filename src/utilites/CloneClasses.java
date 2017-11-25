@@ -14,10 +14,10 @@ import java.util.ArrayList;
  * Created by jubair on 10/18/17.
  */
 public class CloneClasses {
-    private ArrayList<CloneClass> cloneClasses;
+    private static ArrayList<CloneClass> cloneClasses;
 
     public CloneClasses(){
-        cloneClasses = new ArrayList<>();
+        cloneClasses= new ArrayList<>();
     }
     public void readCloneClasses(String xmlFile){
         try {
@@ -92,8 +92,8 @@ public class CloneClasses {
         this.cloneClasses = classes;
     }
 
-    public ArrayList<CloneClass> getCloneClasses(){
-        return this.cloneClasses;
+    public static ArrayList<CloneClass> getCloneClasses(){
+        return cloneClasses;
     }
 
     public void printClasses(){
@@ -114,14 +114,14 @@ public class CloneClasses {
         }
     }
 
-    public CloneClass getCloneClass(String oneFragmentPath){
+    public static CloneClass getCloneClass(String oneFragmentPath, int startLine, int endLine){
         CloneClass requiredClass = null;
 
         for (CloneClass singleClass:
-                this.cloneClasses) {
+                cloneClasses) {
             for (CloneFragment singleFragment:
                     singleClass.cloneFiles) {
-                if (singleFragment.path.equals(oneFragmentPath))
+                if (singleFragment.path.equals(oneFragmentPath) && singleFragment.startLine == startLine && singleFragment.endLine == endLine)
                     requiredClass = singleClass;
             }
         }
@@ -129,12 +129,4 @@ public class CloneClasses {
         return requiredClass;
     }
 
-	public static void main(String[] args) {
-		CloneClasses cloneClasses = new CloneClasses();
-		cloneClasses.readCloneClasses("/home/jubair/SPL3/test_projects/cloneResult/JHotDraw54b1_functions-clones/JHotDraw54b1_functions-clones-0.30-classes.xml");
-
-//		cloneClasses.printClasses();
-        CloneClass cloneClass = cloneClasses.getCloneClass("/home/jubair/SPL3/test_projects/JHotDraw54b1/src/CH/ifa/draw/application/DrawApplication.java");
-        System.out.println(cloneClass.numOfClones);
-    }
 }

@@ -1,101 +1,82 @@
 package views;
 
+import actions.CaretPositionFragment;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import org.jetbrains.annotations.NotNull;
+import utilites.ToolWindowRepository;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  * Created by jubair on 11/25/17.
  * Time 2:57 AM
  */
-public class ClonesView implements ToolWindowFactory{
-	static final String gapList[] = {"0", "10", "15", "20"};
-	final static int maxGap = 20;
-	JComboBox horGapComboBox;
-	JComboBox verGapComboBox;
-	JButton applyButton = new JButton("Apply gaps");
-	GridLayout experimentLayout = new GridLayout(0,2);
+public class ClonesView implements ToolWindowFactory, CaretPositionFragment.ViewUpdateListener{
 
-	private JPanel jPanel;
+	private DefaultTableModel model;
 	private ToolWindow toolWindow;
+	private JComponent wholePanel;
+	private JPanel allClonesPanel;
+	private JTable clonePositions;
+
+	Object data[][]={ {}};
+	Object headers[]={"Path","StartLine","EndLine", "Temp"};
+
 
 	public ClonesView(){
+		wholePanel = new JPanel();
+		allClonesPanel = new JPanel();
+		model = new DefaultTableModel() {
 
-	}
-
-	public void initGaps() {
-		horGapComboBox = new JComboBox(gapList);
-		verGapComboBox = new JComboBox(gapList);
-	}
-
-	public void addComponentsToPane(final Container pane) {
-		initGaps();
-		final JPanel compsToExperiment = new JPanel();
-		compsToExperiment.setLayout(experimentLayout);
-		JPanel controls = new JPanel();
-		controls.setLayout(new GridLayout(2,3));
-
-		//Set up components preferred size
-		JButton b = new JButton("Just fake button");
-		Dimension buttonSize = b.getPreferredSize();
-		compsToExperiment.setPreferredSize(new Dimension((int)(buttonSize.getWidth() * 2.5)+maxGap,
-				(int)(buttonSize.getHeight() * 3.5)+maxGap * 2));
-
-		//Add buttons to experiment with Grid Layout
-		compsToExperiment.add(new JButton("Button 1"));
-		compsToExperiment.add(new JButton("Button 2"));
-		compsToExperiment.add(new JButton("Button 3"));
-		compsToExperiment.add(new JButton("Long-Named Button 4"));
-		compsToExperiment.add(new JButton("5"));
-
-		//Add controls to set up horizontal and vertical gaps
-		controls.add(new Label("Horizontal gap:"));
-		controls.add(new Label("Vertical gap:"));
-		controls.add(new Label(" "));
-		controls.add(horGapComboBox);
-		controls.add(verGapComboBox);
-		controls.add(applyButton);
-
-		//Process the Apply gaps button press
-		applyButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				//Get the horizontal gap value
-				String horGap = (String)horGapComboBox.getSelectedItem();
-				//Get the vertical gap value
-				String verGap = (String)verGapComboBox.getSelectedItem();
-				//Set up the horizontal gap value
-				experimentLayout.setHgap(Integer.parseInt(horGap));
-				//Set up the vertical gap value
-				experimentLayout.setVgap(Integer.parseInt(verGap));
-				//Set up the layout of the buttons
-				experimentLayout.layoutContainer(compsToExperiment);
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				//all cells false
+				return false;
 			}
-		});
-		pane.add(compsToExperiment, BorderLayout.NORTH);
-		pane.add(new JSeparator(), BorderLayout.CENTER);
-		pane.add(controls, BorderLayout.SOUTH);
+		};
+
+		for (Object header : headers) {
+			model.addColumn(header);
+		}
 	}
+
+	public void addComponentsToPane() {
+		clonePositions = new JTable(model);
+		clonePositions.removeColumn(clonePositions.getColumnModel().getColumn(3));
+		clonePositions.getColumnModel().getColumn(0).setMinWidth(200);
+		JScrollPane sp = new JScrollPane(clonePositions);
+		clonePositions.setBounds(30,40,200,300);
+		allClonesPanel.add(sp);
+
+		setActionListener();
+
+		wholePanel.add(allClonesPanel, BorderLayout.NORTH);
+		wholePanel.add(new JSeparator(), BorderLayout.CENTER);
+	}
+
 
 	@Override
 	public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
 		this.toolWindow = toolWindow;
 		ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-		addComponentsToPane(jPanel);
-		Content content = contentFactory.createContent(jPanel, "", false);
+		addComponentsToPane();
+		Content content = contentFactory.createContent(wholePanel, "", false);
 		toolWindow.getContentManager().addContent(content);
+		toolWindow.setAutoHide(true);
 	}
 
 	@Override
 	public void init(ToolWindow window) {
-
+		ToolWindowRepository.getInstance().setView(this);
 	}
 
 	@Override
@@ -107,4 +88,28 @@ public class ClonesView implements ToolWindowFactory{
 	public boolean isDoNotActivateOnStart() {
 		return false;
 	}
+
+	@Override
+	public void update(ArrayList<String[]> list) {
+		while (model.getRowCount() > 0){
+			model.removeRow(model.getRowCount()-1);
+		}
+		list.forEach(strings -> model.addRow(strings));
+	}
+
+	private void setActionListener() {
+		clonePositions.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					JTable target = (JTable)e.getSource();
+					int row = target.getSelectedRow();
+					int column = target.getSelectedColumn();
+					// do some action if appropriate column
+					System.out.println(row);
+					System.out.println(model.getValueAt(row, 3));
+				}
+			}
+		});
+	}
+
 }

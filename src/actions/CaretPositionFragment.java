@@ -6,19 +6,20 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.editor.actionSystem.TypedAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import tracker.FileGenerator;
 import utilites.CloneClass;
 import utilites.CloneClasses;
 import utilites.CloneFragment;
+import utilites.ToolWindowRepository;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class CaretPositionFragment extends AnAction {
 
@@ -61,22 +62,23 @@ public class CaretPositionFragment extends AnAction {
         this.endLine = endLinePosition.line + 1;
         System.out.println("startLine: " + this.startLine + " " + "endLine: " + this.endLine);
 
-        getClonesOfThisFragment(fragmentPath, startLine, endLine);
-
-        FileGenerator fileGenerator = new FileGenerator();
-        fileGenerator.setChanged(fragment);
+        CloneClass cloneClass = CloneClasses.getCloneClass(fragmentPath, startLine, endLine);
+        updateToolWindow(cloneClass);
     }
 
-    public void getClonesOfThisFragment(String fragmentPath, int startLine, int endLine){
-        CloneClasses cloneClasses = new CloneClasses();
-        CloneClass cloneClass = cloneClasses.getCloneClass(fragmentPath);
-
+    private void updateToolWindow(CloneClass cloneClass) {
+        ArrayList<String[]> arrayList = new ArrayList<>();
+        // return cloneClass;
         if(cloneClass != null){
-            for (CloneFragment cloneFragment:
-                    cloneClass.cloneFiles) {
-                System.out.println("Path: " + cloneFragment.path + "startLine: " + startLine + "endLine: " + cloneFragment.endLine);
+            for (CloneFragment cloneFragment: cloneClass.cloneFiles) {
+                arrayList.add(new String[]{new File(cloneFragment.path).getName(), Integer.toString(cloneFragment.startLine) , Integer.toString(cloneFragment.endLine), cloneFragment.path});
+                System.out.println("Path: " + cloneFragment.path + " startLine: " + cloneFragment.startLine + " endLine: " + cloneFragment.endLine);
             }
         }
+        else System.out.println("Not found the specified clone");
+
+        ViewUpdateListener view= ToolWindowRepository.getInstance().getView();
+        view.update(arrayList);
     }
 
     @Override
@@ -84,5 +86,9 @@ public class CaretPositionFragment extends AnAction {
         final Project project = e.getData(CommonDataKeys.PROJECT);
         final Editor editor = e.getData(CommonDataKeys.EDITOR);
         e.getPresentation().setVisible(project != null && editor != null);
+    }
+
+    public interface ViewUpdateListener{
+        public void update(ArrayList<String[]> list);
     }
 }
