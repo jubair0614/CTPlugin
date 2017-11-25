@@ -28,6 +28,8 @@
 		<!-- Add your extensions here -->
 		<!-- Declare the project level service -->
 		<applicationService serviceInterface="services.ProjectInstance" serviceImplementation="services.ProjectInstance"></applicationService>
+
+		<toolWindow id="Clones View Tool Window" anchor="right" factoryClass="views.ClonesView"/>
 	</extensions>
 
 	<actions>

@@ -69,10 +69,10 @@ public class CurrentProject implements ProjectComponent {
 		CloneDetection cloneDetection = new CloneDetection(basePath);
 		cloneDetection.detectClone();
 
-		initializeClones();
+		initialize();
 	}
 
-	private void initializeClones() {
+	private void initialize() {
 		ClonePairs clonePairs = new ClonePairs();
 		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+this.projectInstance.getProjectName()+"_functions-clones/"+this.projectInstance.getProjectName()+"_functions-clones-0.30.xml";
 		clonePairs.readClonePairs(pairFilePath);
