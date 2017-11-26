@@ -53,7 +53,19 @@
 			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 		</action>
 
+		<!-- This action extract code fragment from selected model -->
+		<action id="SelectedFragment" class="actions.SelectedFragment" text="Select Fragment"
+				description="a method fragment is selected for searching its clone instances">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+			<keyboard-shortcut keymap="$default" first-keystroke="ctrl S F"/>
+		</action>
 
+		<!-- This action compare changes in a cloned fragment -->
+		<action id="ShowChanges" class="actions.ChangeDetection" text="Show changes"
+				description="a method fragment is selected for searching its clone instances">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+			<keyboard-shortcut keymap="$default" first-keystroke="ctrl S F"/>
+		</action>
 
 		<action id="EditorBasics.EditorIllustration"
 				class="tryPackage.EditorIllustration"
@@ -88,12 +100,6 @@
 		<action id="InconsistentHint" class="actions.InconsistentHinter" text="Find Inconsistency"
 				description="Select a cloned method and find inconsistency">
 			<add-to-group group-id="EditorActions" anchor="first"/>
-		</action>
-
-		<action id="SelectedFragment" class="actions.SelectedFragment" text="Select Fragment"
-				description="a method fragment is selected for searching its clone instances">
-			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
-			<keyboard-shortcut keymap="$default" first-keystroke="ctrl S F"/>
 		</action>
 
 	</actions>
