@@ -1,0 +1,11 @@
+public Figure findFigure(Rectangle r) {
+		FigureEnumeration fe = figuresReverse();
+		while (fe.hasNextFigure()) {
+			Figure figure = fe.nextFigure();
+			Rectangle fr = figure.displayBox();
+			if (r.intersects(fr)) {
+				return figure;
+			}
+		}
+		return null;
+	}

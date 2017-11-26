@@ -1,0 +1,10 @@
+public Figure findFigure(int x, int y) {
+		FigureEnumeration fe = figuresReverse();
+		while (fe.hasNextFigure()) {
+			Figure figure = fe.nextFigure();
+			if (figure.containsPoint(x, y)) {
+				return figure;
+			}
+		}
+		return null;
+	}
