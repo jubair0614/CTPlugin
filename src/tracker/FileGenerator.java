@@ -7,13 +7,21 @@ import java.io.*;
  * Time 12:51 AM
  */
 public class FileGenerator {
+	private static FileGenerator fileGenerator = null;
 	public File original;
 
 	public File changed;
 
 	public FileGenerator(){
-		this.original = new File("original.txt");
-		this.changed = new File("changed.txt");
+		this.original = new File("/home/jubair/IdeaProjects/CTPlugin/original.txt");
+		this.changed = new File("/home/jubair/IdeaProjects/CTPlugin/changed.txt");
+	}
+
+	public static FileGenerator getInstance(){
+		if(fileGenerator == null){
+			fileGenerator = new FileGenerator();
+		}
+		return fileGenerator;
 	}
 
 	public File getOriginal() {
