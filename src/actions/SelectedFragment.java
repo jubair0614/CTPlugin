@@ -9,6 +9,7 @@ import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import tracker.FileGenerator;
 
 public class SelectedFragment extends AnAction {
 
@@ -23,6 +24,9 @@ public class SelectedFragment extends AnAction {
         String selectedText = selectionModel.getSelectedText();
         System.out.println(selectedText);
         selectionModel.removeSelection();
+
+        FileGenerator fileGenerator = new FileGenerator();
+        fileGenerator.setOriginal(selectedText);
 
         PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
         int offset = editor.getCaretModel().getOffset();
