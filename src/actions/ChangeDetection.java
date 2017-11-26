@@ -3,11 +3,15 @@ package actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import tracker.FileGenerator;
 import tracker.JavaDiffUtils;
+import tracker.PSIContainer;
 
 public class ChangeDetection extends AnAction {
 	@Override
@@ -26,6 +30,15 @@ public class ChangeDetection extends AnAction {
 
 		JavaDiffUtils diffU = new JavaDiffUtils();
 		diffU.run();
+
+		PsiFile psiFile = anActionEvent.getData(LangDataKeys.PSI_FILE);
+		int offset = editor.getCaretModel().getOffset();
+		PsiElement elementAt = psiFile.findElementAt(offset).getParent();
+		System.out.println(elementAt.getText());
+
+		PSIContainer psiContainer = new PSIContainer();
+		psiContainer.setChanged(elementAt);
+		psiContainer.analyze(psiContainer.getChanged());
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import tracker.PSIContainer;
 import utilites.CloneClass;
 import utilites.CloneClasses;
 import utilites.CloneFragment;
@@ -49,6 +50,10 @@ public class CaretPositionFragment extends AnAction {
         PsiElement elementAt = psiFile.findElementAt(offset).getParent();
         String fragment = elementAt.getText();
         System.out.println(fragment);
+
+        PSIContainer psiContainer = new PSIContainer();
+        psiContainer.setOriginal(elementAt);
+        psiContainer.analyze(psiContainer.getOriginal());
 
         fragmentPath = psiFile.getContainingDirectory().toString() + "/" + psiFile.getName();
         System.out.println(fragmentPath);

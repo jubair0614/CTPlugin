@@ -10,6 +10,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import tracker.FileGenerator;
+import tracker.PSIContainer;
 
 public class SelectedFragment extends AnAction {
 
@@ -32,8 +33,10 @@ public class SelectedFragment extends AnAction {
         int offset = editor.getCaretModel().getOffset();
         PsiElement elementAt = psiFile.findElementAt(offset).getParent();
         System.out.println(elementAt.getText());
-        String s = elementAt.getNode().getElementType().toString();
-        System.out.println(s);
+
+        PSIContainer psiContainer = new PSIContainer();
+        psiContainer.setOriginal(elementAt);
+        psiContainer.analyze(psiContainer.getOriginal());
 
         boolean methodFragment = checkForValidMethodFragment(selectedText);
         System.out.println(methodFragment);
