@@ -36,9 +36,9 @@ public class ChangeDetection extends AnAction {
 		PsiElement elementAt = psiFile.findElementAt(offset).getParent();
 		System.out.println(elementAt.getText());
 
-		PSIContainer psiContainer = new PSIContainer();
-		psiContainer.setChanged(elementAt);
-		psiContainer.analyze(psiContainer.getChanged());
+		PSIContainer.getInstance().setChanged(elementAt);
+		PSIContainer.getInstance().analyze(PSIContainer.getInstance().getChanged());
+		PSIContainer.getInstance().compare();
 	}
 
 	@Override

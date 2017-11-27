@@ -29,7 +29,7 @@
 		<!-- Declare the project level service -->
 		<applicationService serviceInterface="services.ProjectInstance" serviceImplementation="services.ProjectInstance"></applicationService>
 
-		<toolWindow id="Clones View Tool Window" anchor="right" factoryClass="views.ClonesView"/>
+		<toolWindow id="Clones View" anchor="right" factoryClass="views.ClonesView"/>
 	</extensions>
 
 	<actions>
@@ -94,7 +94,7 @@
 
 			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="utilites.CloneFragment tracking" />
 
-			<action id="MethodFragment" class="MethodFragment" text="MethodFragment" description="Method Fragment Extraction" />
+			<action id="actions.MethodFragment" class="actions.MethodFragment" text="actions.MethodFragment" description="Method Fragment Extraction" />
 		</group>
 
 		<action id="InconsistentHint" class="actions.InconsistentHinter" text="Find Inconsistency"

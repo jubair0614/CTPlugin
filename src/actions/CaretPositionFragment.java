@@ -51,9 +51,8 @@ public class CaretPositionFragment extends AnAction {
         String fragment = elementAt.getText();
         System.out.println(fragment);
 
-        PSIContainer psiContainer = new PSIContainer();
-        psiContainer.setOriginal(elementAt);
-        psiContainer.analyze(psiContainer.getOriginal());
+        PSIContainer.getInstance().setOriginal(elementAt);
+        PSIContainer.getInstance().analyze(PSIContainer.getInstance().getOriginal());
 
         fragmentPath = psiFile.getContainingDirectory().toString() + "/" + psiFile.getName();
         System.out.println(fragmentPath);
@@ -94,6 +93,6 @@ public class CaretPositionFragment extends AnAction {
     }
 
     public interface ViewUpdateListener{
-        public void update(ArrayList<String[]> list);
+        void update(ArrayList<String[]> list);
     }
 }

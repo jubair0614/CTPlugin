@@ -1,7 +1,6 @@
 package tracker;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiModificationTracker;
 
 /**
  * Created by jubair on 11/26/17.
@@ -52,10 +51,11 @@ public class PSIContainer {
 	}
 
 	public void compare(){
-		if(original != null && changed != null){
+		if(getOriginal() != null && getChanged() != null){
 			PsiElement[] originalChildren = original.getChildren();
 			PsiElement[] changedChildren = changed.getChildren();
-			
+
+			System.out.println("AST: " + original.equals(changed));
 		}
 	}
 

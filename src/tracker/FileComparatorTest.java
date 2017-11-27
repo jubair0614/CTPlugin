@@ -13,10 +13,10 @@ import static org.junit.Assert.assertEquals;
  * Created by jubair on 11/23/17.
  * Time 1:57 AM
  */
-public class FileComapatorTest {
-	private final File original = new File("./files/originalFile.txt");
+public class FileComparatorTest {
+	private final File original = new File("/home/jubair/IdeaProjects/CTPlugin/changed.txt");
 
-	private final File revised = new File("./files/revisedFile.txt");
+	private final File revised = new File("/home/jubair/IdeaProjects/CTPlugin/original.txt");
 
 	@Test
 	public void shouldGetChangesBetweenFiles() {

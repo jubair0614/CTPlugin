@@ -34,9 +34,8 @@ public class SelectedFragment extends AnAction {
         PsiElement elementAt = psiFile.findElementAt(offset).getParent();
         System.out.println(elementAt.getText());
 
-        PSIContainer psiContainer = new PSIContainer();
-        psiContainer.setOriginal(elementAt);
-        psiContainer.analyze(psiContainer.getOriginal());
+        PSIContainer.getInstance().setOriginal(elementAt);
+        PSIContainer.getInstance().analyze(PSIContainer.getInstance().getOriginal());
 
         boolean methodFragment = checkForValidMethodFragment(selectedText);
         System.out.println(methodFragment);
