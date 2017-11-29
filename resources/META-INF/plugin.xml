@@ -35,16 +35,6 @@
 	<actions>
 		<!-- Add your actions here -->
 
-		<!-- This action detect clones in the whole repository -->
-		<action id="Plugin.actions.CloneDetectionAction"
-				class="actions.CloneDetectionAction"
-				text="Detect Clone"
-				description="clone detection in the whole repository">
-			<add-to-group group-id="BuildMenu" relative-to-action="Compile" anchor="after"/>
-			<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
-			<mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
-		</action>
-
 		<!-- This action extract current fragment from the caret position -->
 		<action id="CaretPosition.FragmentExtractor"
 				class="actions.CaretPositionFragment"
@@ -84,17 +74,16 @@
 		<group id="Plugin.CloneTrack" text="CloneTrack" description="Custom Menu for SPL3">
 			<add-to-group group-id="MainMenu" anchor="last"  />
 
-			<action id="Plugin.actions.CloneDetectionAction" class="actions.CloneDetectionAction" text="Detect utilites.CloneFragment" description="clone detection using tool">
+			<!-- This action detect clones in the whole repository -->
+			<action id="Plugin.actions.CloneDetectionAction"
+					class="actions.CloneDetectionAction"
+					text="Detect Clone"
+					description="clone detection in the whole repository" />
 
-				<keyboard-shortcut first-keystroke="control alt p" second-keystroke="C" keymap="$default"/>
-
-				<mouse-shortcut keystroke="control button3 doubleClick" keymap="$default"/>
-
-			</action>
-
-			<action id="Plugin.CloneTracking" class="CloneTracking" text="Track clone" description="utilites.CloneFragment tracking" />
-
-			<action id="actions.MethodFragment" class="actions.MethodFragment" text="actions.MethodFragment" description="Method Fragment Extraction" />
+			<action id="actions.MethodFragment"
+					class="actions.MethodFragment"
+					text="Method Fragment"
+					description="Method Fragment Extraction" />
 		</group>
 
 		<action id="InconsistentHint" class="actions.InconsistentHinter" text="Find Inconsistency"

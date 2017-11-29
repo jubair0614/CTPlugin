@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import detection.CloneDetection;
 import services.ProjectInstance;
 import utilites.CloneClasses;
+import utilites.CloneMapper;
 import utilites.ClonePairs;
 
 /**
@@ -38,6 +39,9 @@ public class CloneDetectionAction extends AnAction {
 		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30-classes.xml";
 		cloneClasses.readCloneClasses(classFilePath);
 		cloneClasses.printClasses();
+
+		CloneMapper.getInstance().setMapper(cloneClasses);
+		CloneMapper.getInstance().printMap();
 	}
 
 }
