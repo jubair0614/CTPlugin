@@ -1,24 +1,28 @@
 package services;
 
-import com.intellij.execution.ui.ConsoleView;
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.Messages;
 import detection.CloneDetection;
+import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import utilites.CloneClasses;
 import utilites.ClonePairs;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Map;
 
 /**
  * Created by jubair on 11/12/17.
  */
 public class CurrentProject implements ProjectComponent {
 	ProjectInstance projectInstance;
+	final static Logger logger = Logger.getLogger(CurrentProject.class);
 
 	public CurrentProject(Project project) {
 		this.projectInstance = null;
@@ -45,6 +49,8 @@ public class CurrentProject implements ProjectComponent {
 	@Override
 	public void projectOpened() {
 		// called when project is opened
+		CustomLogger.tieSystemOutAndErrToLog();
+		checkDependencies();
 		this.projectInstance = ServiceManager.getService(ProjectInstance.class);
 
 		ProjectManager PM = ProjectManager.getInstance();
@@ -70,6 +76,93 @@ public class CurrentProject implements ProjectComponent {
 		cloneDetection.detectClone();
 
 		initialize();
+	}
+
+	private void checkDependencies() {
+		if(txlOk() && nicadOk())
+			return ;
+		else if(txlOk() && !nicadOk())
+			setupNicad();
+		else if(!txlOk() && nicadOk())
+			setupTxl();
+		else {
+			setupTxl();
+			setupNicad();
+		}
+	}
+
+	private void setupNicad() {
+		ProcessBuilder pb = new ProcessBuilder("scripts/nicad4Install.sh");
+//		Map<String, String> env = pb.environment();
+//		env.put("VAR1", "myValue");
+//		env.remove("OTHERVAR");
+//		env.put("VAR2", env.get("VAR1") + "suffix");
+		pb.directory(new File("resources"));
+
+		try {
+			Process process = pb.start();
+			System.out.println(pb.directory().getPath());
+			BufferedReader reader =
+					new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			String line = "";
+			try {
+				while((line = reader.readLine()) != null) {
+					System.out.print(line + "\n");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*public static void main(String[] args) {
+		CustomLogger.tieSystemOutAndErrToLog();
+
+		CurrentProject currentProject = new CurrentProject(null);
+		currentProject.setupTxl();
+		currentProject.setupNicad();
+	}*/
+	private void setupTxl() {
+		ProcessBuilder pb = new ProcessBuilder("scripts/txlInstall.sh");
+//		Map<String, String> env = pb.environment();
+//		env.put("VAR1", "myValue");
+//		env.remove("OTHERVAR");
+//		env.put("VAR2", env.get("VAR1") + "suffix");
+		pb.directory(new File("resources"));
+
+		try {
+			Process p = pb.start();
+//			p.getOutputStream().flush();
+			System.out.println(pb.directory().getPath());
+			BufferedReader reader =
+					new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+			String line = "";
+			try {
+				while((line = reader.readLine()) != null) {
+					System.out.print(line + "\n");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean txlOk(){
+		return check("/usr/local/bin/txl") || check("/usr/local/lib/txl");
+	}
+
+	private boolean nicadOk() {
+		return check("/usr/local/bin/nicad4") || check("/usr/local/lib/nicad4");
+	}
+
+	private boolean check(String pathname) {
+		return new File(pathname).exists();
 	}
 
 	private void initialize() {

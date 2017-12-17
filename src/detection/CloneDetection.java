@@ -1,5 +1,8 @@
 package detection;
 
+import org.apache.log4j.Logger;
+import services.CurrentProject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,6 +13,7 @@ import java.io.InputStreamReader;
 public class CloneDetection{
 
 	private String projectPath;
+	final static Logger logger = Logger.getLogger(CloneDetection.class);
 
 	public CloneDetection(String projectPath) {
 		this.projectPath = projectPath;
@@ -52,9 +56,11 @@ public class CloneDetection{
 		try {
 			while((line = reader.readLine()) != null) {
 				System.out.print(line + "\n");
+				logger.debug(line);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 		try {

@@ -129,4 +129,19 @@ public class CloneClasses {
         return requiredClass;
     }
 
+    public static CloneFragment getCloneFragment(String oneFragmentPath, int startLine, int endLine){
+        CloneFragment requiredFragment = null;
+
+        for (CloneClass singleClass:
+                cloneClasses) {
+            for (CloneFragment singleFragment:
+                    singleClass.cloneFiles) {
+                if (singleFragment.path.equals(oneFragmentPath) && singleFragment.startLine == startLine && singleFragment.endLine == endLine)
+                    requiredFragment = singleFragment;
+            }
+        }
+
+        return requiredFragment;
+    }
+
 }
