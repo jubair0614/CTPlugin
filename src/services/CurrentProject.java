@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class CurrentProject implements ProjectComponent {
 	ProjectInstance projectInstance;
-	final static Logger logger = Logger.getLogger(CurrentProject.class);
+	//final static Logger logger = Logger.getLogger(CurrentProject.class);
 
 	public CurrentProject(Project project) {
 		this.projectInstance = null;
@@ -49,7 +49,7 @@ public class CurrentProject implements ProjectComponent {
 	@Override
 	public void projectOpened() {
 		// called when project is opened
-		CustomLogger.tieSystemOutAndErrToLog();
+		//CustomLogger.tieSystemOutAndErrToLog();
 		checkDependencies();
 		this.projectInstance = ServiceManager.getService(ProjectInstance.class);
 
@@ -81,10 +81,10 @@ public class CurrentProject implements ProjectComponent {
 	private void checkDependencies() {
 		if(txlOk() && nicadOk())
 			return ;
-		else if(txlOk() && !nicadOk())
-			setupNicad();
-		else if(!txlOk() && nicadOk())
+		else if(!txlOk())
 			setupTxl();
+		else if(!nicadOk())
+			setupNicad();
 		else {
 			setupTxl();
 			setupNicad();
