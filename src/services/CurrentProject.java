@@ -79,8 +79,8 @@ public class CurrentProject implements ProjectComponent {
 		cloneDetection.detectClone();
 
 		initialize();
-		CodeFragment codeFragment = new CodeFragment();
-		codeFragment.setFragments(CloneClasses.getCloneClasses());
+		CodeFragments codeFragments = new CodeFragments();
+		codeFragments.setFragments(CloneClasses.getCloneClasses());
 	}
 
 	private void checkDependencies() {
