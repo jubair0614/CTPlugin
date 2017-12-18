@@ -8,14 +8,17 @@ import com.intellij.openapi.ui.Messages;
 import detection.CloneDetection;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import utilites.CloneClasses;
-import utilites.ClonePairs;
+import utilites.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Created by jubair on 11/12/17.
@@ -76,6 +79,8 @@ public class CurrentProject implements ProjectComponent {
 		cloneDetection.detectClone();
 
 		initialize();
+		CodeFragment codeFragment = new CodeFragment();
+		codeFragment.setFragments(CloneClasses.getCloneClasses());
 	}
 
 	private void checkDependencies() {
