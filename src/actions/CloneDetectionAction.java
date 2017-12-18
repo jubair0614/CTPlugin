@@ -31,6 +31,8 @@ public class CloneDetectionAction extends AnAction {
 
 	private void initializeClones(String projectName) {
 		ClonePairs clonePairs = new ClonePairs();
+		//String userName = System.getProperty("user.name");
+		//String pairFilePath = "/home/" + userName+"/tool2/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30.xml";
 		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectName+"_functions-clones/"+projectName+"_functions-clones-0.30.xml";
 		clonePairs.readClonePairs(pairFilePath);
 		clonePairs.printPairs();
@@ -40,8 +42,8 @@ public class CloneDetectionAction extends AnAction {
 		cloneClasses.readCloneClasses(classFilePath);
 		cloneClasses.printClasses();
 
-		CloneMapper.getInstance().setMapper(cloneClasses);
-		CloneMapper.getInstance().printMap();
+//		CloneMapper.getInstance().setMapper(cloneClasses);
+//		CloneMapper.getInstance().printMap();
 	}
 
 }

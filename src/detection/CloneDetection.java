@@ -30,6 +30,10 @@ public class CloneDetection{
 				System.out.println("SourcererCC");
 				tool = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runSourcerCCWithProject.sh " + this.projectPath;
 				break;
+			case 3:
+				System.out.println("nicad-4.0");
+				tool = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/fixedNicad4.sh " + this.projectPath;
+				break;
 			default:
 				System.out.println("nicad-4.0");
 				tool = "/home/jubair/IdeaProjects/CTPlugin/resources/scripts/runNicad4.sh " + this.projectPath;
@@ -38,7 +42,7 @@ public class CloneDetection{
 	}
 
 	public void detectClone() {
-		String toolScript = toolChooser(1);
+		String toolScript = toolChooser(3);
 		System.out.println("Project: " + getProjectPath());
 		Process proc = null;
 		try {

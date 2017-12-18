@@ -66,9 +66,9 @@ public class CurrentProject implements ProjectComponent {
 		this.projectInstance.setProjectPath(basePath + "/" + projectName);
 		this.projectInstance.setProjectName(projectName);
 
-		Messages.showMessageDialog(
+		/*Messages.showMessageDialog(
 				"Project: " + projectName +
-						" is opened!", "Information", Messages.getInformationIcon());
+						" is opened!", "Information", Messages.getInformationIcon());*/
 
 		System.out.println(projectInstance.getProjectPath() + "\n" + projectInstance.getProjectName());
 
@@ -167,12 +167,12 @@ public class CurrentProject implements ProjectComponent {
 
 	private void initialize() {
 		ClonePairs clonePairs = new ClonePairs();
-		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+this.projectInstance.getProjectName()+"_functions-clones/"+this.projectInstance.getProjectName()+"_functions-clones-0.30.xml";
+		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectInstance.getProjectName()+"_functions-clones/"+projectInstance.getProjectName()+"_functions-clones-0.30.xml";
 		clonePairs.readClonePairs(pairFilePath);
 		clonePairs.printPairs();
 
 		CloneClasses cloneClasses = new CloneClasses();
-		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+this.projectInstance.getProjectName()+"_functions-clones/"+this.projectInstance.getProjectName()+"_functions-clones-0.30-classes.xml";
+		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectInstance.getProjectName()+"_functions-clones/"+projectInstance.getProjectName()+"_functions-clones-0.30-classes.xml";
 		cloneClasses.readCloneClasses(classFilePath);
 		cloneClasses.printClasses();
 	}
