@@ -144,4 +144,31 @@ public class CloneClasses {
         return requiredFragment;
     }
 
+	public static CloneClass getCloneClass(String fragmentPath, int position) {
+        CloneClass requiredClass = null;
+
+        for (CloneClass singleClass:
+                cloneClasses) {
+            for (CloneFragment singleFragment:
+                    singleClass.cloneFiles) {
+                if (singleFragment.path.equals(fragmentPath) && singleFragment.startLine <= position && singleFragment.endLine >= position)
+                    requiredClass = singleClass;
+            }
+        }
+
+        return requiredClass;
+	}
+
+    public static CloneFragment validClone(String fragmentPath, int position) {
+        CloneFragment cloneFragment = null;
+        for (CloneClass singleClass:
+                cloneClasses) {
+            for (CloneFragment singleFragment:
+                    singleClass.cloneFiles) {
+                if (singleFragment.path.equals(fragmentPath) && singleFragment.startLine <= position && singleFragment.endLine >= position)
+                    cloneFragment = singleFragment;
+            }
+        }
+        return cloneFragment;
+    }
 }

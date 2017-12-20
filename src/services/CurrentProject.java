@@ -1,7 +1,17 @@
 package services;
 
+import actions.MyTypedHandler;
+import com.intellij.execution.ui.ConsoleView;
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.editor.EditorFactory;
+import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
+import com.intellij.openapi.editor.actionSystem.EditorActionManager;
+import com.intellij.openapi.editor.actionSystem.TypedAction;
+import com.intellij.openapi.graph.option.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.ui.Messages;
@@ -79,8 +89,8 @@ public class CurrentProject implements ProjectComponent {
 		cloneDetection.detectClone();
 
 		initialize();
-		CodeFragments codeFragments = new CodeFragments();
-		codeFragments.setFragments(CloneClasses.getCloneClasses());
+		CodeFragments.getInstance().setFragments((CloneClasses.getCloneClasses()));
+		CodeFragments.getInstance().printFragments();
 	}
 
 	private void checkDependencies() {
@@ -172,14 +182,14 @@ public class CurrentProject implements ProjectComponent {
 
 	private void initialize() {
 		ClonePairs clonePairs = new ClonePairs();
-		String pairFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectInstance.getProjectName()+"_functions-clones/"+projectInstance.getProjectName()+"_functions-clones-0.30.xml";
+		String pairFilePath = "/home/" + System.getProperty("user.name") + "/SPL3/test_projects/cloneResult/"+projectInstance.getProjectName()+"_functions-clones/"+projectInstance.getProjectName()+"_functions-clones-0.30.xml";
 		clonePairs.readClonePairs(pairFilePath);
-		clonePairs.printPairs();
+		//clonePairs.printPairs();
 
 		CloneClasses cloneClasses = new CloneClasses();
-		String classFilePath = "/home/jubair/SPL3/test_projects/cloneResult/"+projectInstance.getProjectName()+"_functions-clones/"+projectInstance.getProjectName()+"_functions-clones-0.30-classes.xml";
+		String classFilePath = "/home/" + System.getProperty("user.name") + "/SPL3/test_projects/cloneResult/"+projectInstance.getProjectName()+"_functions-clones/"+projectInstance.getProjectName()+"_functions-clones-0.30-classes.xml";
 		cloneClasses.readCloneClasses(classFilePath);
-		cloneClasses.printClasses();
+		//cloneClasses.printClasses();
 	}
 
 	@Override

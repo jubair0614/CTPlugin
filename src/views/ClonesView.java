@@ -1,6 +1,9 @@
 package views;
 
 import actions.CaretPositionFragment;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -14,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +46,8 @@ public class ClonesView implements ToolWindowFactory, CaretPositionFragment.View
 				//all cells false
 				return false;
 			}
+
+
 		};
 
 		for (Object header : headers) {
@@ -53,6 +59,34 @@ public class ClonesView implements ToolWindowFactory, CaretPositionFragment.View
 		clonePositions = new JTable(model);
 		clonePositions.removeColumn(clonePositions.getColumnModel().getColumn(3));
 		clonePositions.getColumnModel().getColumn(0).setMinWidth(200);
+		clonePositions.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = clonePositions.rowAtPoint(e.getPoint());
+				int col = clonePositions.columnAtPoint(e.getPoint());
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+
+			}
+		});
 		JScrollPane sp = new JScrollPane(clonePositions);
 		clonePositions.setBounds(30,40,200,300);
 		allClonesPanel.add(sp);
@@ -100,7 +134,7 @@ public class ClonesView implements ToolWindowFactory, CaretPositionFragment.View
 	private void setActionListener() {
 		clonePositions.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
+				if (e.getClickCount() == 1) {
 					JTable target = (JTable)e.getSource();
 					int row = target.getSelectedRow();
 					int column = target.getSelectedColumn();

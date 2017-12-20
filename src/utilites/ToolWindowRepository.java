@@ -1,11 +1,13 @@
 package utilites;
 
+import views.ClonedCodeView;
 import views.ClonesView;
 
 public class ToolWindowRepository {
 
     private static ToolWindowRepository repository = null;
     private ClonesView view ;
+    private ClonedCodeView codeView;
 
     private ToolWindowRepository() {
 
@@ -24,5 +26,13 @@ public class ToolWindowRepository {
 
     public ClonesView getView() {
         return view;
+    }
+
+    public ClonedCodeView getCodeView() {
+        return codeView;
+    }
+
+    public void setCodeView(ClonedCodeView codeView) {
+        this.codeView = codeView;
     }
 }

@@ -123,7 +123,7 @@ public class ClonePairs {
 		return this.clonePairs.size();
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		ClonePairs clonePairs = new ClonePairs();
 		clonePairs.readClonePairs("/home/jubair/SPL3/test_projects/cloneResult/JHotDraw54b1_functions-clones/JHotDraw54b1_functions-clones-0.30.xml");
 		System.out.println(clonePairs.getNumOfPairs());
@@ -131,5 +131,5 @@ public class ClonePairs {
 		clonePairs.printPairs();
 		ClonePair clonePair = clonePairs.getClonePair("/home/jubair/SPL3/test_projects/JHotDraw54b1/src/CH/ifa/draw/application/DrawApplication.java");
 		System.out.println(clonePair.similarity);
-	}
+	}*/
 }

@@ -27,72 +27,40 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<!-- Add your extensions here -->
 		<!-- Declare the project level service -->
-		<applicationService serviceInterface="services.ProjectInstance" serviceImplementation="services.ProjectInstance"></applicationService>
+		<applicationService serviceInterface="services.ProjectInstance"
+							serviceImplementation="services.ProjectInstance">
+		</applicationService>
 
 		<toolWindow id="Clones View" anchor="right" factoryClass="views.ClonesView"/>
+		<toolWindow id="Clone Changed View" anchor="right" factoryClass="views.ClonedCodeView"/>
 	</extensions>
 
 	<actions>
-		<!-- Add your actions here -->
-
-		<!-- This action extract current fragment from the caret position -->
-		<action id="CaretPosition.FragmentExtractor"
-				class="actions.CaretPositionFragment"
-				text="Show Clones"
-				description="Get all clones of selected Fragment">
+		<action id="CaretPosition.FragmentExtractor" class="actions.CaretPositionFragment"
+				text="Show Clones" description="Get all clones of selected Fragment">
 			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 		</action>
-
 		<!-- This action extract code fragment from selected model -->
 		<action id="SelectedFragment" class="actions.SelectedFragment" text="Select Fragment"
 				description="a method fragment is selected for searching its clone instances">
 			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 			<keyboard-shortcut keymap="$default" first-keystroke="ctrl S F"/>
 		</action>
-
 		<!-- This action compare changes in a cloned fragment -->
 		<action id="ShowChanges" class="actions.ChangeDetection" text="Show changes"
 				description="a method fragment is selected for searching its clone instances">
 			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 			<keyboard-shortcut keymap="$default" first-keystroke="ctrl S F"/>
 		</action>
-
-		<action id="EditorBasics.EditorIllustration"
-				class="tryPackage.EditorIllustration"
-				text="Editor Basics"
-				description="Illustrates how to plug an action in">
-			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
-		</action>
-		<action id="EditorBasics.EditorHandlerIllustration"
-				class="tryPackage.EditorHandlerIllustration"
-				text="Editor Handler"
-				description="Illustrates how to plug an action in">
-			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
-		</action>
-
-
 		<group id="Plugin.CloneTrack" text="CloneTrack" description="Custom Menu for SPL3">
 			<add-to-group group-id="MainMenu" anchor="last"  />
-
 			<!-- This action detect clones in the whole repository -->
-			<action id="Plugin.actions.CloneDetectionAction"
-					class="actions.CloneDetectionAction"
-					text="Detect Clone"
-					description="clone detection in the whole repository" />
-
-			<action id="actions.MethodFragment"
-					class="actions.MethodFragment"
-					text="Method Fragment"
-					description="Method Fragment Extraction" />
+			<action id="Plugin.actions.CloneDetectionAction" class="actions.CloneDetectionAction"
+					text="Detect Clone"description="clone detection in the whole repository" />
+			<action id="actions.MethodFragment"	class="actions.MethodFragment"
+					text="Method Fragment"description="Method Fragment Extraction" />
 		</group>
-
-		<action id="InconsistentHint" class="actions.InconsistentHinter" text="Find Inconsistency"
-				description="Select a cloned method and find inconsistency">
-			<add-to-group group-id="EditorActions" anchor="first"/>
-		</action>
-
 	</actions>
-
 
 	<project-components>
 		<component>

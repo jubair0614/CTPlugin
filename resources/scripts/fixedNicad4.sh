@@ -3,7 +3,9 @@
 echo $line
 echo "Input File Building..........."
 
-    cd /home/jubair/SPL3/tools/NiCad-4.0
+#    cd /home/jubair/SPL3/tools/NiCad-4.0
+
+    cd /home/jubair/NiCad-4.0
 
     nicad4 functions java $1
 
@@ -16,12 +18,12 @@ echo "Input File Building..........."
     echo "Project is $projectName"
 
     echo "File copying in the output directory"
-	cp -r /home/jubair/SPL3/test_projects/"${projectName}_functions-clones" /home/jubair/SPL3/test_projects/cloneResult/
-	cp /home/jubair/SPL3/test_projects/"${projectName}_functions.xml" /home/jubair/SPL3/test_projects/cloneResult/"${projectName}_functions-clones"/"${projectName}_functions.xml"
+	cp -r "${1}_functions-clones" /home/$USER/SPL3/test_projects/cloneResult/
+	cp "${1}_functions.xml" /home/$USER/SPL3/test_projects/cloneResult/"${projectName}_functions-clones"/"${projectName}_functions.xml"
 
 	echo "Cleaning  directory"
-	rm -r /home/jubair/SPL3/test_projects/"${projectName}_functions-clones"
-	rm -f /home/jubair/SPL3/test_projects/"${projectName}_functions.xml"
-	rm -f /home/jubair/SPL3/test_projects/"${projectName}_functions-clones-"*
+	rm -r "${1}_functions-clones"
+	rm -f "${1}_functions.xml"
+	rm -f "${1}_functions-clones-"*
 
 echo "Successfully Done"

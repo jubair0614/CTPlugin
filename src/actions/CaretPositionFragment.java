@@ -1,23 +1,19 @@
 package actions;
 
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.editor.actionSystem.TypedAction;
+import com.intellij.openapi.editor.event.CaretEvent;
+import com.intellij.openapi.editor.event.CaretListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import tracker.PSIContainer;
-import utilites.CloneClass;
-import utilites.CloneClasses;
-import utilites.CloneFragment;
-import utilites.ToolWindowRepository;
+import tracker.FileGenerator;
+import utilites.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,6 +33,7 @@ public class CaretPositionFragment extends AnAction {
     static {
         final EditorActionManager actionManager = EditorActionManager.getInstance();
         final TypedAction typedAction = actionManager.getTypedAction();
+        //typedAction.setupHandler(new MyTypedHandler());
     }
 
     @Override
@@ -51,23 +48,84 @@ public class CaretPositionFragment extends AnAction {
         String fragment = elementAt.getText();
         System.out.println(fragment);
 
-        PSIContainer.getInstance().setOriginal(elementAt);
-        PSIContainer.getInstance().analyze(PSIContainer.getInstance().getOriginal());
-
         fragmentPath = psiFile.getContainingDirectory().toString() + "/" + psiFile.getName();
         System.out.println(fragmentPath);
         fragmentPath = fragmentPath.substring(13, fragmentPath.length());
 
-        TextRange textRange = elementAt.getTextRange();
-        VisualPosition startLinePosition = editor.offsetToVisualPosition(textRange.getStartOffset());
-        VisualPosition endLinePosition = editor.offsetToVisualPosition(textRange.getEndOffset());
+        if(elementAt.getFirstChild().getNode().getElementType().toString().equals("DOC_COMMENT")) {
+            int[] positions = removeCommentDoc(editor, elementAt);
+            this.startLine = positions[0];
+            this.endLine = positions[1];
+        }
 
-        this.startLine = startLinePosition.line + 1;
-        this.endLine = endLinePosition.line + 1;
-        System.out.println("startLine: " + this.startLine + " " + "endLine: " + this.endLine);
+            /*PSIContainer.getInstance().setOriginal(elementAt);
+            PSIContainer.getInstance().analyze(PSIContainer.getInstance().getOriginal());*/
 
+        else {
+            TextRange textRange = elementAt.getTextRange();
+            VisualPosition startLinePosition = editor.offsetToVisualPosition(textRange.getStartOffset());
+            VisualPosition endLinePosition = editor.offsetToVisualPosition(textRange.getEndOffset());
+
+            this.startLine = startLinePosition.line + 1;
+            this.endLine = endLinePosition.line + 1;
+            System.out.println("startLine: " + this.startLine + " " + "endLine: " + this.endLine);
+        }
         CloneClass cloneClass = CloneClasses.getCloneClass(fragmentPath, startLine, endLine);
         updateToolWindow(cloneClass);
+        //CloneClass changeClass = CloneClasses.getCloneClass(fragmentPath, startLine);
+
+        startEditorListener(editor, fragment, fragmentPath);
+    }
+
+    private void startEditorListener(Editor editor, String fragment, String fragmentPath) {
+        editor.getCaretModel().addCaretListener(new CaretListener() {
+            @Override
+            public void caretPositionChanged(CaretEvent caretEvent) {
+                System.out.println("Caret listener: " + caretEvent.getCaret().getVisualLineStart());
+                int position = caretEvent.getNewPosition().toVisualPosition().line + 1;
+                System.out.println(position);
+                System.out.println(caretEvent.getSource().getClass().getName());
+                checkForClone(fragmentPath, position);
+            }
+
+            private void checkForClone(String fragmentPath, int position) {
+                CloneFragment cloneFragment = CloneClasses.validClone(fragmentPath, position);
+                if(cloneFragment != null) {
+                    CloneClass cloneClass = CloneClasses.getCloneClass(fragmentPath, position);
+                    CodeFragment fragmentWithContent = CodeFragments.getInstance().getFragmentWithContent(cloneFragment);
+                    if(fragmentWithContent != null){
+                        FileGenerator.getInstance().setOriginal(fragmentWithContent.getContent());
+                    }
+                    CurrentClassContainer.getInstance().setCloneClass(cloneClass);
+                }
+            }
+
+            @Override
+            public void caretAdded(CaretEvent caretEvent) {
+
+            }
+
+            @Override
+            public void caretRemoved(CaretEvent caretEvent) {
+
+            }
+        });
+    }
+
+    private int[] removeCommentDoc(Editor editor, PsiElement fragment) {
+        PsiElement firstChild = fragment.getFirstChild();
+        System.out.println(firstChild.getNode().getElementType().toString());
+
+        int endOffset1 = firstChild.getTextRange().getEndOffset();
+        VisualPosition visualPosition = editor.offsetToVisualPosition(endOffset1);
+        System.out.println(visualPosition.line);
+        int startLine = visualPosition.line + 2;
+        int endOffset = fragment.getTextRange().getEndOffset();
+        VisualPosition visualPosition1 = editor.offsetToVisualPosition(endOffset);
+        int endLine = visualPosition1.line+1;
+        System.out.println(startLine + " " + endLine);
+        int[] positions = {startLine, endLine};
+        return positions;
     }
 
     private void updateToolWindow(CloneClass cloneClass) {
@@ -79,7 +137,10 @@ public class CaretPositionFragment extends AnAction {
                 System.out.println("Path: " + cloneFragment.path + " startLine: " + cloneFragment.startLine + " endLine: " + cloneFragment.endLine);
             }
         }
-        else System.out.println("Not found the specified clone");
+        else{
+            System.out.println("Not found the specified clone");
+
+        }
 
         ViewUpdateListener view= ToolWindowRepository.getInstance().getView();
         view.update(arrayList);
